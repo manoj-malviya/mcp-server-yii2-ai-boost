@@ -89,6 +89,18 @@ class McpController extends Controller
      */
     private function configureLogging(): void
     {
+        // Disable the debug module - it spawns child processes on shutdown
+        // that output to stdout, corrupting the MCP protocol stream
+        if (isset(Yii::$app->modules['debug'])) {
+            Yii::$app->setModule('debug', null);
+            // Remove from bootstrap to prevent any further initialization
+            $bootstrap = Yii::$app->bootstrap;
+            if (($key = array_search('debug', $bootstrap)) !== false) {
+                unset($bootstrap[$key]);
+                Yii::$app->bootstrap = $bootstrap;
+            }
+        }
+
         // Suppress all logging during MCP server operation
         // Logging would interfere with JSON-RPC protocol on STDOUT
         error_reporting(E_ALL);

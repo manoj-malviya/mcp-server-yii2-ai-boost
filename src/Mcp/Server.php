@@ -11,7 +11,7 @@ use yii\base\Exception;
 /**
  * MCP Server for Yii2 Applications
  *
- * Provides AI assistants with tools and resources for Yii2 development.
+ * Provides AI assistants with tools for Yii2 development.
  * Implements the Model Context Protocol (MCP) for communication via JSON-RPC.
  */
 class Server extends Component
@@ -36,11 +36,6 @@ class Server extends Component
      * @var array Collection of registered tools
      */
     private $tools = [];
-
-    /**
-     * @var array Collection of registered resources
-     */
-    private $resources = [];
 
     /**
      * @var Transports\TransportInterface Transport instance
@@ -74,9 +69,6 @@ class Server extends Component
 
         // Initialize all tools
         $this->registerTools();
-
-        // Initialize resources
-        $this->registerResources();
 
         // Create transport instance
         $this->createTransport();
@@ -285,15 +277,6 @@ class Server extends Component
                 $this->log("Tool arguments: " . json_encode($arguments));
                 return $this->callTool($name, $arguments);
 
-            case 'resources/list':
-                $this->log("Calling listResources");
-                return $this->listResources();
-
-            case 'resources/read':
-                $uri = $params['uri'] ?? null;
-                $this->log("Reading resource: $uri");
-                return $this->readResource($uri);
-
             default:
                 throw new Exception("Unknown method: $method");
         }
@@ -316,8 +299,7 @@ class Server extends Component
         return [
             'protocolVersion' => $protocolVersion,
             'capabilities' => [
-                'tools' => new \stdClass(),      // Empty object, not array
-                'resources' => new \stdClass(),  // Empty object, not array
+                'tools' => new \stdClass(),
             ],
             'serverInfo' => [
                 'name' => 'Yii2 AI Boost',
@@ -380,78 +362,6 @@ class Server extends Component
     }
 
     /**
-     * List all available resources
-     *
-     * @return array
-     */
-    private function listResources(): array
-    {
-        $this->log("Listing " . count($this->resources) . " available resources");
-        $resources = [];
-        foreach ($this->resources as $uri => $resource) {
-            $this->log("  - Resource: $uri");
-            $resources[] = [
-                'uri' => $uri,
-                'name' => $resource->getName(),
-                'description' => $resource->getDescription(),
-            ];
-        }
-        return ['resources' => $resources];
-    }
-
-    /**
-     * Read a specific resource
-     *
-     * @param string $uri Resource URI
-     * @return mixed Resource content
-     * @throws Exception
-     */
-    private function readResource(string $uri): mixed
-    {
-        if (!$uri) {
-            $this->log("Resource URI is required", "ERROR");
-            throw new Exception("Resource URI is required");
-        }
-
-        if (!isset($this->resources[$uri])) {
-            $this->log("Resource not found: $uri", "ERROR");
-            throw new Exception("Unknown resource: $uri");
-        }
-
-        $this->log("Reading resource: $uri");
-        $resource = $this->resources[$uri];
-        $data = $resource->read();
-        $this->log("Resource read complete: $uri");
-
-        // Map internal type to MIME type
-        $mimeType = 'text/plain';
-        if (isset($data['type'])) {
-            switch ($data['type']) {
-                case 'json':
-                    $mimeType = 'application/json';
-                    break;
-                case 'markdown':
-                    $mimeType = 'text/markdown';
-                    break;
-                case 'text':
-                default:
-                    $mimeType = 'text/plain';
-                    break;
-            }
-        }
-
-        return [
-            'contents' => [
-                [
-                    'uri' => $uri,
-                    'mimeType' => $mimeType,
-                    'text' => $data['content'] ?? '',
-                ]
-            ]
-        ];
-    }
-
-    /**
      * Register all MCP tools
      */
     private function registerTools(): void
@@ -481,16 +391,6 @@ class Server extends Component
     }
 
     /**
-     * Register MCP resources
-     */
-    private function registerResources(): void
-    {
-        $this->log("Registering MCP resources");
-        // No resources currently registered
-        $this->log("Resource registration complete. Total: " . count($this->resources) . " resources");
-    }
-
-    /**
      * Create transport instance based on configuration
      *
      * @throws Exception
@@ -515,15 +415,5 @@ class Server extends Component
     public function getTools(): array
     {
         return $this->tools;
-    }
-
-    /**
-     * Get registered resources (for debugging/info)
-     *
-     * @return array
-     */
-    public function getResources(): array
-    {
-        return $this->resources;
     }
 }

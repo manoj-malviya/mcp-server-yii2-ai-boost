@@ -70,7 +70,6 @@ class InfoController extends Controller
 
         $files = [
             '.mcp.json' => 'MCP server configuration',
-            'CLAUDE.md' => 'Application guidelines',
             '.ai/guidelines' => 'Guidelines directory',
         ];
 
@@ -94,17 +93,14 @@ class InfoController extends Controller
         $this->stdout("Available Tools\n", 33);
         $this->stdout("─────────────────────────────────────────\n", 33);
 
-        $tools = [
-            'application_info' => 'Get application version, environment, modules, extensions',
-            'database_schema' => 'Inspect database tables, columns, indexes, and Active Record models',
-            'config_access' => 'Access application configuration and parameters',
-            'route_inspector' => 'Inspect application routes and URL rules',
-            'component_inspector' => 'Inspect application components and their properties',
-        ];
+        $server = new \codechap\yii2boost\Mcp\Server([
+            'basePath' => Yii::$app->getBasePath(),
+        ]);
+        $tools = $server->getTools();
 
-        foreach ($tools as $name => $description) {
+        foreach ($tools as $name => $tool) {
             $this->stdout("  • $name\n", 36);
-            $this->stdout("    $description\n", 0);
+            $this->stdout("    " . $tool->getDescription() . "\n", 0);
         }
 
         $this->stdout("\nTotal: " . count($tools) . " tools available\n\n", 32);
@@ -129,13 +125,6 @@ class InfoController extends Controller
         $coreGuidelinesPath = $guidelinesPath . '/core';
         if (is_dir($coreGuidelinesPath)) {
             $files = glob($coreGuidelinesPath . '/*.md');
-            foreach ($files as $file) {
-                $this->stdout("  ✓ " . basename($file) . "\n", 32);
-            }
-        }
-
-        if (is_dir($guidelinesPath . '/ecosystem')) {
-            $files = glob($guidelinesPath . '/ecosystem/*.md');
             foreach ($files as $file) {
                 $this->stdout("  ✓ " . basename($file) . "\n", 32);
             }

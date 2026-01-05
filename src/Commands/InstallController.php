@@ -103,7 +103,6 @@ class InstallController extends Controller
             $basePath . '/.ai',
             $basePath . '/.ai/guidelines',
             $basePath . '/.ai/guidelines/core',
-            $basePath . '/.ai/guidelines/ecosystem',
         ];
 
         $created = 0;
@@ -291,7 +290,7 @@ class InstallController extends Controller
 
         $this->stdout("Configuration files created:\n", 36);
         $this->stdout("  • .mcp.json (IDE configuration)\n", 0);
-        $this->stdout("  • .ai/guidelines/ (framework and ecosystem guidelines)\n\n", 0);
+        $this->stdout("  • .ai/guidelines/ (framework guidelines)\n\n", 0);
 
         $this->stdout("MCP Server command:\n", 36);
         $this->stdout("  php yii boost/mcp\n\n", 37);

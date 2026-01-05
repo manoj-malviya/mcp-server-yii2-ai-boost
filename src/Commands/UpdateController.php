@@ -88,7 +88,6 @@ class UpdateController extends Controller
 
         $files = [
             '.mcp.json',
-            'CLAUDE.md',
             '.ai/guidelines',
         ];
 
