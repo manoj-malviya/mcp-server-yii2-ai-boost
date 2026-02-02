@@ -22,8 +22,11 @@ Yii2 AI Boost is a Model Context Protocol (MCP) server that provides AI assistan
 For experienced developers:
 
 ```bash
-# 1. Install package
-composer require codechap/yii2-ai-boost:^1.0 --dev
+# 1. Install stable release
+composer require codechap/yii2-ai-boost:^1.1 --dev
+
+# Or install beta (includes model_inspector + validation_rules tools)
+composer require codechap/yii2-ai-boost:1.2.0-beta.1 --dev
 
 # 2. Run installation
 php yii boost/install
@@ -42,7 +45,12 @@ That's it! Claude Code and other AI tools now have access to your application co
 
 ```bash
 cd /path/to/yii2/application
-composer require codechap/yii2-ai-boost:^1.0 --dev
+
+# Stable release (8 core tools)
+composer require codechap/yii2-ai-boost:^1.1 --dev
+
+# Beta release (10 tools - includes model inspector + validation rules)
+composer require codechap/yii2-ai-boost:1.2.0-beta.1 --dev
 ```
 
 ### **Step 2**: Run Installation Wizard
