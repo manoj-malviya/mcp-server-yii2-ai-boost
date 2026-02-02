@@ -1,6 +1,6 @@
 # Yii2 AI Boost - MCP Server for Yii2 Applications
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.2.0--beta.1-blue)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-green)
 ![Yii2](https://img.shields.io/badge/Yii2-2.0.45-orange)
 
@@ -10,7 +10,7 @@ Yii2 AI Boost is a Model Context Protocol (MCP) server that provides AI assistan
 
 ## Features
 
-- **8 Core MCP Tools** - Database inspection and queries, config access, route analysis, component introspection, logging, and guideline search
+- **10 MCP Tools** - Database inspection and queries, config access, route analysis, component introspection, model and validation inspection, logging, and guideline search
 - **On-Demand Guidelines** - AI searches 36KB of Yii2 best practices only when needed (zero context cost until requested)
 - **Framework Guidelines** - Comprehensive Yii2 patterns covering controllers, models, migrations, caching, auth, and more
 - **IDE Integration** - Works with Claude Code, Cursor, Zed, and other MCP-compatible editors
@@ -233,9 +233,27 @@ Search the local Yii2 AI Guidelines database:
 - Filter by category (e.g., 'database', 'security', 'views')
 - Returns full Markdown content of the most relevant guides
 
+### 9. `model_inspector` - Model Inspector
+Inspect Active Record models at runtime:
+- Attributes with database types, labels, and hints
+- Relations (hasOne/hasMany) with link details and junction tables
+- Attached behaviors with class names and properties
+- Scenarios with active and safe attributes
+- Fields and extra fields for API serialization
+- Automatic model discovery from `@app/models`
+
+### 10. `validation_rules` - Validation Rules
+Inspect model validation rules and constraints:
+- All validation rules with parameters and scenario filters
+- Built-in vs custom validator classification
+- Error messages per validator grouped by attribute
+- Constraint summary (required, unique, string length, number range, email, etc.)
+- Safe attributes per scenario
+- Supports filtering by specific scenario
+
 ## Core Tools Architecture
 
-All 8 core tools provide deep introspection into your Yii2 application. They follow a consistent architecture based on the **BaseTool** abstract class, which provides:
+All 10 tools provide deep introspection into your Yii2 application. They follow a consistent architecture based on the **BaseTool** abstract class, which provides:
 
 - **Automatic Sanitization**: Sensitive data (passwords, tokens, keys) is automatically redacted from all tool outputs
 - **Database Discovery**: Tools automatically detect and access configured database connections
@@ -266,8 +284,8 @@ The Log Inspector features a **multi-reader architecture** supporting three log 
 | **1** | **log_inspector** | ✓ Complete | File, database, and in-memory logs with filtering |
 | **1** | **search_guidelines** | ✓ Complete | On-demand Yii2 guidelines search with categories |
 | **1** | **database_query** | ✓ Complete | Execute database queries (limited rows) |
-| 2 | model_inspector | 🔲 Planned | Active Record model analysis, properties, relations |
-| 2 | validation_rules | 🔲 Planned | Model validation rules, error messages, constraints |
+| **2** | **model_inspector** | ✓ Complete | Active Record model analysis, properties, relations |
+| **2** | **validation_rules** | ✓ Complete | Model validation rules, error messages, constraints |
 | 3 | migration_inspector | 🔲 Planned | List migrations, status, rollback history |
 | 3 | asset_manager | 🔲 Planned | Asset bundles, dependencies, registration status |
 | 3 | widget_inspector | 🔲 Planned | Available widgets, usage, properties |
@@ -413,8 +431,9 @@ _This section will be expanded as common questions arise. For now, please reach 
 | Phase | Goal | Status | Tools |
 |-------|------|--------|-------|
 | **1** | Core MVP | ✓ Complete | 8 tools + guidelines + installer |
-| **2** | Extended Tools | Planned | +10 tools (model inspector, validation, queries) |
-| **3** | Advanced Features | Planned | Performance profiling, behavior/event inspection |
+| **2** | Model Introspection | ✓ Complete | +2 tools (model inspector, validation rules) |
+| **3** | Extended Tools | Planned | Migration, asset, widget, performance tools |
+| **4** | Advanced Features | Planned | Behavior/event/cache inspection, semantic search |
 
 Track progress and contribute at [GitHub](https://github.com/codechap/yii2-ai-boost).
 

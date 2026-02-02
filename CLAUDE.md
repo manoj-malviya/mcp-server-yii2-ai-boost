@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Yii2 AI Boost** is a Model Context Protocol (MCP) server that integrates with Yii2 applications to provide AI assistants with tools for framework introspection, database inspection, and application guidelines. It implements MCP v2025-11-25 with JSON-RPC 2.0 over STDIO transport.
 
 The package is installable as a Composer dependency and provides:
-- **8 Core Tools** for introspection (application info, database schema, database query, config, routes, components, logs, guidelines search)
+- **10 Tools** for introspection (application info, database schema, database query, config, routes, components, logs, guidelines search, model inspector, validation rules)
 - **Installation Wizard** for IDE integration (Claude Code, VS Code, Cursor, PhpStorm)
 - **Comprehensive Logging** across multiple levels (startup, requests, errors, transport)
 
@@ -78,7 +78,7 @@ Yii2 Application Integration
    - All extend `BaseTool` for consistency
    - Automatic sanitization of sensitive data
    - Support JSON Schema input validation
-   - Current tools: ApplicationInfo, DatabaseSchema, DatabaseQuery, ConfigAccess, RouteInspector, ComponentInspector, LogInspector, SearchGuidelines
+   - Current tools: ApplicationInfo, DatabaseSchema, DatabaseQuery, ConfigAccess, RouteInspector, ComponentInspector, LogInspector, SearchGuidelines, ModelInspector, ValidationRules
 
 4. **Transport Layer** (`src/Mcp/Transports/StdioTransport.php`)
    - STDIO communication (reads STDIN, writes STDOUT)
@@ -143,17 +143,26 @@ Yii2 Application Integration
 
 ## Testing Strategy
 
-**Test Organization**: Unit tests in `tests/` directory with structure mirroring `src/`
+**Test Organization**: Two test suites in `tests/` directory:
+- **Unit Tests** (`tests/` excluding `tests/Mcp/Tools/`) - Protocol, server, transport tests (no Yii2 context)
+- **Tool Tests** (`tests/Mcp/Tools/`) - Tool integration tests using Yii2 bootstrap with SQLite in-memory DB
 
 **Test Scope**: Tests focus on:
 - JSON-RPC protocol compliance (`JsonRpcProtocolTest.php`)
 - Server request/response structure (`ServerTest.php`)
 - Transport layer handling (`StdioTransportTest.php`)
+- Model Inspector tool execution (`Mcp/Tools/ModelInspectorToolTest.php`)
+- Validation Rules tool execution (`Mcp/Tools/ValidationRulesToolTest.php`)
+
+**Tool Test Infrastructure**:
+- `tests/yii_bootstrap.php` - Boots a minimal Yii2 console app with SQLite in-memory DB
+- `tests/fixtures/SchemaSetupTrait.php` - Creates/drops test tables (user, post, category)
+- `tests/fixtures/app/models/` - Fixture ActiveRecord models (User, Post, Category)
+- `tests/Mcp/Tools/ToolTestCase.php` - Base test case with schema setup/teardown
 
 **Limitations**: Full integration testing requires running MCP server with real Yii2 app. Unit tests cannot fully test:
-- Database introspection (no real DB)
-- Full tool execution (no Yii2 context)
 - Transport with actual STDIN/STDOUT
+- Real application model discovery (uses fixture models instead)
 
 **Manual Testing**:
 ```bash
@@ -240,7 +249,7 @@ All logging goes to STDERR immediately and to files asynchronously. This ensures
 ## Key Files and Their Roles
 
 - **`src/Mcp/Server.php`** - Core orchestrator, protocol handler, tool/resource registry
-- **`src/Mcp/Tools/Base/BaseTool.php`** - Base class providing sanitization, DB discovery
+- **`src/Mcp/Tools/Base/BaseTool.php`** - Base class providing sanitization, DB discovery, model resolution
 - **`src/Mcp/Transports/StdioTransport.php`** - STDIO I/O handler
 - **`src/Bootstrap.php`** - Yii2 integration entry point
 - **`src/Commands/McpController.php`** - MCP server starter with logging setup
@@ -284,17 +293,22 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"my_tool","
 
 ## Future Expansion Points
 
-**Phase 2 Tools** (planned):
-- `model_inspector` - Active Record model analysis
-- `validation_rules` - Model validation introspection
+**Phase 2 Tools** (complete):
+- `model_inspector` - Active Record model analysis (attributes, relations, behaviors, scenarios, fields)
+- `validation_rules` - Model validation introspection (rules, messages, constraints, safe attributes)
+
+**Phase 3 Tools** (planned):
 - `migration_inspector` - Migration status
-- `behavior_inspector` - Behavior analysis
-- `event_inspector` - Application events
-- `database_query` - Safe read-only queries
 - `asset_manager` - Asset bundle inspection
 - `widget_inspector` - Widget discovery
-- `security_audit` - Security risk detection
-- `code_search` - Codebase pattern matching
+- `performance_profiler` - Query profiling, bottleneck detection
+
+**Phase 4 Tools** (future):
+- `behavior_inspector` - Behavior analysis
+- `event_inspector` - Application events
+- `cache_inspector` - Cache components and metrics
+- `environment_analyzer` - PHP configuration, extensions
+- `semantic_search` - Enhanced guidelines search
 
 **Transport Expansion** (would require transport abstraction layer):
 - `HttpTransport` - For non-IDE MCP clients
