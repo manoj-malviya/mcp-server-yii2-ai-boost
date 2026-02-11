@@ -1,6 +1,6 @@
 # Yii2 AI Boost - MCP Server for Yii2 Applications
 
-![Version](https://img.shields.io/badge/version-1.2.0--beta.1-blue)
+![Version](https://img.shields.io/badge/version-1.2.1--beta.1-blue)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-green)
 ![Yii2](https://img.shields.io/badge/Yii2-2.0.45-orange)
 
@@ -10,7 +10,7 @@ Yii2 AI Boost is a Model Context Protocol (MCP) server that provides AI assistan
 
 ## Features
 
-- **10 MCP Tools** - Database inspection and queries, config access, route analysis, component introspection, model and validation inspection, logging, and guideline search
+- **11 MCP Tools** - Database inspection and queries, config access, route analysis, component introspection, model and validation inspection, console command discovery, logging, and guideline search
 - **On-Demand Guidelines** - AI searches 36KB of Yii2 best practices only when needed (zero context cost until requested)
 - **Framework Guidelines** - Comprehensive Yii2 patterns covering controllers, models, migrations, caching, auth, and more
 - **IDE Integration** - Works with Claude Code, Cursor, Zed, and other MCP-compatible editors
@@ -25,7 +25,7 @@ For experienced developers:
 # 1. Install stable release
 composer require codechap/yii2-ai-boost:^1.1 --dev
 
-# Or install beta (includes model_inspector + validation_rules tools)
+# Or install beta (includes model_inspector, validation_rules, console_command_inspector)
 composer require codechap/yii2-ai-boost:1.2.1-beta.1 --dev
 
 # 2. Run installation
@@ -49,7 +49,7 @@ cd /path/to/yii2/application
 # Stable release (8 core tools)
 composer require codechap/yii2-ai-boost:^1.1 --dev
 
-# Beta release (10 tools - includes model inspector + validation rules)
+# Beta release (11 tools - includes model inspector, validation rules, console commands)
 composer require codechap/yii2-ai-boost:1.2.1-beta.1 --dev
 ```
 
@@ -259,9 +259,17 @@ Inspect model validation rules and constraints:
 - Safe attributes per scenario
 - Supports filtering by specific scenario
 
+### 11. `console_command_inspector` - Console Command Inspector (beta release)
+Discover and inspect Yii2 console commands (`./yii` commands):
+- List all discoverable console controllers with class and description
+- Inspect individual commands with actions, options, and help text
+- Drill into specific actions for arguments, types, and defaults
+- Discovers from controllerMap, namespace directory, and modules
+- Option aliases and PHPDoc-based help extraction
+
 ## Core Tools Architecture
 
-All 10 tools provide deep introspection into your Yii2 application. They follow a consistent architecture based on the **BaseTool** abstract class, which provides:
+All 11 tools provide deep introspection into your Yii2 application. They follow a consistent architecture based on the **BaseTool** abstract class, which provides:
 
 - **Automatic Sanitization**: Sensitive data (passwords, tokens, keys) is automatically redacted from all tool outputs
 - **Database Discovery**: Tools automatically detect and access configured database connections
@@ -294,6 +302,7 @@ The Log Inspector features a **multi-reader architecture** supporting three log 
 | **1** | **database_query** | ✓ Complete | Execute database queries (limited rows) |
 | **2** | **model_inspector** | ✓ Complete | Active Record model analysis, properties, relations |
 | **2** | **validation_rules** | ✓ Complete | Model validation rules, error messages, constraints |
+| **2** | **console_command_inspector** | ✓ Complete | Console command discovery, actions, options, arguments |
 | 3 | migration_inspector | 🔲 Planned | List migrations, status, rollback history |
 | 3 | asset_manager | 🔲 Planned | Asset bundles, dependencies, registration status |
 | 3 | widget_inspector | 🔲 Planned | Available widgets, usage, properties |
@@ -438,8 +447,8 @@ _This section will be expanded as common questions arise. For now, please reach 
 
 | Phase | Goal | Status | Tools |
 |-------|------|--------|-------|
-| **1** | Core MVP | ✓ Complete | 8 tools + guidelines + installer |
-| **2** | Model Introspection | ✓ Complete | +2 tools (model inspector, validation rules) |
+| **1** | Core MVP | ✓ Complete | 8 tools + guidelines + installer   |
+| **2** | Model & Command Introspection | ✓ Complete | +3 tools (model inspector, validation rules, console commands) |
 | **3** | Extended Tools | Planned | Migration, asset, widget, performance tools |
 | **4** | Advanced Features | Planned | Behavior/event/cache inspection, semantic search |
 
