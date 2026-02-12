@@ -381,6 +381,7 @@ class Server extends Component
             Tools\ConsoleCommandInspectorTool::class,
             Tools\MigrationInspectorTool::class,
             Tools\WidgetInspectorTool::class,
+            Tools\PerformanceProfilerTool::class,
         ];
 
         foreach ($toolClasses as $class) {

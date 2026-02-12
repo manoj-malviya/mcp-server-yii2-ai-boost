@@ -1,6 +1,6 @@
 # Yii2 AI Boost - MCP Server for Yii2 Applications
 
-![Version](https://img.shields.io/badge/version-1.2.3--beta.1-blue)
+![Version](https://img.shields.io/badge/version-1.2.4--beta.1-blue)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-green)
 ![Yii2](https://img.shields.io/badge/Yii2-2.0.45-orange)
 
@@ -10,7 +10,7 @@ Yii2 AI Boost is a Model Context Protocol (MCP) server that provides AI assistan
 
 ## Features
 
-- **13 MCP Tools** - Database inspection and queries, config access, route analysis, component introspection, model and validation inspection, console command discovery, migration inspection, widget inspection, logging, and guideline search
+- **14 MCP Tools** - Database inspection and queries, config access, route analysis, component introspection, model and validation inspection, console command discovery, migration inspection, widget inspection, performance profiling, logging, and guideline search
 - **On-Demand Guidelines** - AI searches 36KB of Yii2 best practices only when needed (zero context cost until requested)
 - **Framework Guidelines** - Comprehensive Yii2 patterns covering controllers, models, migrations, caching, auth, and more
 - **IDE Integration** - Works with Claude Code, Cursor, Zed, and other MCP-compatible editors
@@ -25,8 +25,8 @@ For experienced developers:
 # 1. Install stable release
 composer require codechap/yii2-ai-boost:^1.1 --dev
 
-# Or install beta (includes model_inspector, validation_rules, console_command_inspector, migration_inspector, widget_inspector)
-composer require codechap/yii2-ai-boost:1.2.3-beta.1 --dev
+# Or install beta (includes model_inspector, validation_rules, console_command_inspector, migration_inspector, widget_inspector, performance_profiler)
+composer require codechap/yii2-ai-boost:1.2.4-beta.1 --dev
 
 # 2. Run installation
 php yii boost/install
@@ -49,8 +49,8 @@ cd /path/to/yii2/application
 # Stable release (8 core tools)
 composer require codechap/yii2-ai-boost:^1.1 --dev
 
-# Beta release (13 tools - includes model inspector, validation rules, console commands, migration inspector, widget inspector)
-composer require codechap/yii2-ai-boost:1.2.3-beta.1 --dev
+# Beta release (14 tools - includes model inspector, validation rules, console commands, migration inspector, widget inspector, performance profiler)
+composer require codechap/yii2-ai-boost:1.2.4-beta.1 --dev
 ```
 
 ### **Step 2**: Run Installation Wizard
@@ -285,9 +285,19 @@ Discover and inspect Yii2 widgets:
 - Short name resolution (e.g., "ActiveForm" resolves to yii\widgets\ActiveForm)
 - Discovers widgets from @app/widgets/ directory
 
+### 14. `performance_profiler` - Performance Profiler (beta release)
+Analyze query performance and index coverage:
+- EXPLAIN query plans with driver-specific formatting (MySQL, PostgreSQL, SQLite)
+- Automatic detection of full table scans, missing index usage, filesort, and temporary tables
+- Per-table index analysis with foreign key column coverage
+- Missing index detection for FK-like columns (*_id naming convention)
+- Table statistics (row counts, data/index sizes for MySQL, scan counts for PostgreSQL)
+- Overview mode with per-table summary and missing-index report across all tables
+- Supports bound parameters for parameterized query analysis
+
 ## Core Tools Architecture
 
-All 13 tools provide deep introspection into your Yii2 application. They follow a consistent architecture based on the **BaseTool** abstract class, which provides:
+All 14 tools provide deep introspection into your Yii2 application. They follow a consistent architecture based on the **BaseTool** abstract class, which provides:
 
 - **Automatic Sanitization**: Sensitive data (passwords, tokens, keys) is automatically redacted from all tool outputs
 - **Database Discovery**: Tools automatically detect and access configured database connections
@@ -323,8 +333,7 @@ The Log Inspector features a **multi-reader architecture** supporting three log 
 | **2** | **console_command_inspector** | ✓ Complete | Console command discovery, actions, options, arguments |
 | **3** | **migration_inspector** | ✓ Complete | Migration status, history, pending, source viewing |
 | **3** | **widget_inspector** | ✓ Complete | Available widgets, properties, methods, events, hierarchy |
-| 3 | asset_manager | 🔲 Planned | Asset bundles, dependencies, registration status |
-| 3 | performance_profiler | 🔲 Planned | Query profiling, timing, bottleneck detection |
+| **3** | **performance_profiler** | ✓ Complete | EXPLAIN plans, index analysis, missing index detection |
 | 4 | behavior_inspector | 🔲 Future | Attached behaviors, methods, event handlers |
 | 4 | event_inspector | 🔲 Future | Application events, listeners, handlers |
 | 4 | cache_inspector | 🔲 Future | Cache components, performance metrics |
@@ -467,7 +476,7 @@ _This section will be expanded as common questions arise. For now, please reach 
 |-------|------|--------|-------|
 | **1** | Core MVP | ✓ Complete | 8 tools + guidelines + installer   |
 | **2** | Model & Command Introspection | ✓ Complete | +3 tools (model inspector, validation rules, console commands) |
-| **3** | Extended Tools | In Progress | +2 tools (migration inspector, widget inspector); asset, performance planned |
+| **3** | Extended Tools | ✓ Complete | +3 tools (migration inspector, widget inspector, performance profiler) |
 | **4** | Advanced Features | Planned | Behavior/event/cache inspection, semantic search |
 
 Track progress and contribute at [GitHub](https://github.com/codechap/yii2-ai-boost).

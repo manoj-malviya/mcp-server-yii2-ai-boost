@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Yii2 AI Boost** is a Model Context Protocol (MCP) server that integrates with Yii2 applications to provide AI assistants with tools for framework introspection, database inspection, and application guidelines. It implements MCP v2025-11-25 with JSON-RPC 2.0 over STDIO transport.
 
 The package is installable as a Composer dependency and provides:
-- **13 Tools** for introspection (application info, database schema, database query, config, routes, components, logs, guidelines search, model inspector, validation rules, console command inspector, migration inspector, widget inspector)
+- **14 Tools** for introspection (application info, database schema, database query, config, routes, components, logs, guidelines search, model inspector, validation rules, console command inspector, migration inspector, widget inspector, performance profiler)
 - **Installation Wizard** for IDE integration (Claude Code, VS Code, Cursor, PhpStorm)
 - **Comprehensive Logging** across multiple levels (startup, requests, errors, transport)
 
@@ -78,7 +78,7 @@ Yii2 Application Integration
    - All extend `BaseTool` for consistency
    - Automatic sanitization of sensitive data
    - Support JSON Schema input validation
-   - Current tools: ApplicationInfo, DatabaseSchema, DatabaseQuery, ConfigAccess, RouteInspector, ComponentInspector, LogInspector, SearchGuidelines, ModelInspector, ValidationRules, ConsoleCommandInspector, MigrationInspector, WidgetInspector
+   - Current tools: ApplicationInfo, DatabaseSchema, DatabaseQuery, ConfigAccess, RouteInspector, ComponentInspector, LogInspector, SearchGuidelines, ModelInspector, ValidationRules, ConsoleCommandInspector, MigrationInspector, WidgetInspector, PerformanceProfiler
 
 4. **Transport Layer** (`src/Mcp/Transports/StdioTransport.php`)
    - STDIO communication (reads STDIN, writes STDOUT)
@@ -155,6 +155,7 @@ Yii2 Application Integration
 - Validation Rules tool execution (`Mcp/Tools/ValidationRulesToolTest.php`)
 - Migration Inspector tool execution (`Mcp/Tools/MigrationInspectorToolTest.php`)
 - Widget Inspector tool execution (`Mcp/Tools/WidgetInspectorToolTest.php`)
+- Performance Profiler tool execution (`Mcp/Tools/PerformanceProfilerToolTest.php`)
 
 **Tool Test Infrastructure**:
 - `tests/yii_bootstrap.php` - Boots a minimal Yii2 console app with SQLite in-memory DB
@@ -303,8 +304,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"my_tool","
 **Phase 3 Tools** (in progress):
 - `migration_inspector` - Migration status, history, pending, source viewing (complete)
 - `widget_inspector` - Widget discovery, properties, methods, events, hierarchy (complete)
-- `asset_manager` - Asset bundle inspection (planned)
-- `performance_profiler` - Query profiling, bottleneck detection (planned)
+- `performance_profiler` - EXPLAIN plans, index analysis, missing index detection (complete)
 
 **Phase 4 Tools** (future):
 - `behavior_inspector` - Behavior analysis
