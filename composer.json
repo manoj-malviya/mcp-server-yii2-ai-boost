@@ -38,7 +38,8 @@
         "psr-4": {
             "codechap\\yii2boost\\tests\\": "tests/",
             "app\\models\\": "tests/fixtures/app/models/",
-            "app\\commands\\": "tests/fixtures/app/commands/"
+            "app\\commands\\": "tests/fixtures/app/commands/",
+            "app\\widgets\\": "tests/fixtures/app/widgets/"
         }
     },
     "extra": {
