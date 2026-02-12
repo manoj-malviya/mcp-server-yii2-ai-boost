@@ -336,7 +336,7 @@ The Log Inspector features a **multi-reader architecture** supporting three log 
 | **3** | **performance_profiler** | ✓ Complete | EXPLAIN plans, index analysis, missing index detection |
 | 4 | tinker | 🔲 Planned | Execute arbitrary PHP code in Yii2 application context |
 | 4 | env_inspector | 🔲 Planned | Environment variables, PHP extensions, system configuration |
-| 4 | semantic_search | 🔲 Planned | Embeddings-based guidelines search with semantic matching |
+| 5 | semantic_search | 🔲 Planned | SQLite FTS5 search over Yii2 guide + guidelines sourced from GitHub |
 
 ---
 
@@ -475,7 +475,8 @@ _This section will be expanded as common questions arise. For now, please reach 
 | **1** | Core MVP | ✓ Complete | 8 tools + guidelines + installer   |
 | **2** | Model & Command Introspection | ✓ Complete | +3 tools (model inspector, validation rules, console commands) |
 | **3** | Extended Tools | ✓ Complete | +3 tools (migration inspector, widget inspector, performance profiler) |
-| **4** | Advanced Features | Planned | Tinker, env inspector, semantic search |
+| **4** | Advanced Tools | Planned | Tinker, env inspector |
+| **5** | Semantic Search | Planned | SQLite FTS5 index, GitHub content pipeline, ranked search |
 
 Track progress and contribute at [GitHub](https://github.com/codechap/yii2-ai-boost).
 

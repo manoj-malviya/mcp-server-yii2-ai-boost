@@ -309,7 +309,11 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"my_tool","
 **Phase 4 Tools** (planned):
 - `tinker` - Execute arbitrary PHP code in Yii2 application context
 - `env_inspector` - Environment variables, PHP extensions, system configuration
-- `semantic_search` - Embeddings-based guidelines search with semantic matching
+
+**Phase 5 — Semantic Search** (planned):
+- SQLite FTS5 search index over Yii2 guide + local guidelines
+- GitHub content pipeline: fetch Yii2 definitive guide at install/update
+- BM25-ranked search replacing current grep-based `search_guidelines`
 
 **Transport Expansion** (would require transport abstraction layer):
 - `HttpTransport` - For non-IDE MCP clients
