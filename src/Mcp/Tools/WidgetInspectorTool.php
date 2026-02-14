@@ -358,7 +358,8 @@ final class WidgetInspectorTool extends BaseTool
 
         throw new \Exception(
             "Widget '$name' not found. Provide a full class name or ensure it exists "
-            . "in yii\\widgets\\, yii\\grid\\, @app/widgets/, or module widgets/ directories."
+            . "in yii\\widgets\\, yii\\grid\\, @app/widgets/, @app/components/, "
+            . "or module widgets/components directories."
         );
     }
 
@@ -393,7 +394,7 @@ final class WidgetInspectorTool extends BaseTool
     }
 
     /**
-     * Discover widgets in @app/widgets and module widget directories
+     * Discover widgets in @app/widgets, @app/components, and module directories
      *
      * @return array
      */
@@ -401,13 +402,16 @@ final class WidgetInspectorTool extends BaseTool
     {
         $widgets = [];
 
-        // Scan @app/widgets/
-        $appWidgetsPath = Yii::getAlias('@app/widgets', false);
-        if ($appWidgetsPath !== false && is_dir($appWidgetsPath)) {
-            $widgets = array_merge($widgets, $this->scanDirectoryForWidgets($appWidgetsPath));
+        // Scan @app/widgets/ and @app/components/
+        $appDirs = ['@app/widgets', '@app/components'];
+        foreach ($appDirs as $alias) {
+            $path = Yii::getAlias($alias, false);
+            if ($path !== false && is_dir($path)) {
+                $widgets = array_merge($widgets, $this->scanDirectoryForWidgets($path));
+            }
         }
 
-        // Scan module widget directories
+        // Scan module widget and component directories
         $modulesPath = Yii::getAlias('@app/modules', false);
         if ($modulesPath !== false && is_dir($modulesPath)) {
             $modulesDirIterator = new \DirectoryIterator($modulesPath);
@@ -416,12 +420,15 @@ final class WidgetInspectorTool extends BaseTool
                     continue;
                 }
 
-                $moduleWidgetsPath = $moduleDir->getPathname() . '/widgets';
-                if (is_dir($moduleWidgetsPath)) {
-                    $widgets = array_merge(
-                        $widgets,
-                        $this->scanDirectoryForWidgets($moduleWidgetsPath)
-                    );
+                $subdirs = ['widgets', 'components'];
+                foreach ($subdirs as $subdir) {
+                    $dirPath = $moduleDir->getPathname() . '/' . $subdir;
+                    if (is_dir($dirPath)) {
+                        $widgets = array_merge(
+                            $widgets,
+                            $this->scanDirectoryForWidgets($dirPath)
+                        );
+                    }
                 }
             }
         }
