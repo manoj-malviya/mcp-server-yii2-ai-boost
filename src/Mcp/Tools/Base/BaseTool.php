@@ -58,8 +58,9 @@ abstract class BaseTool extends Component
     {
         // List of sensitive keys to filter
         $sensitiveKeys = [
-            'password', 'secret', 'key', 'token', 'api_key', 'private_key',
+            'password', 'passwd', 'secret', 'key', 'token', 'api_key', 'private_key',
             'auth_key', 'access_token', 'refresh_token', 'client_secret',
+            'credential', 'dsn', 'database_url', 'connection_string',
         ];
 
         if (is_array($data)) {

@@ -44,6 +44,8 @@ final class TinkerTool extends BaseTool
         '/\b(exit|die)\s*\(/i',
         '/\b(passthru|shell_exec|system|proc_open|popen|pcntl_exec)\s*\(/i',
         '/\bexec\s*\(/i',
+        '/\b(call_user_func|call_user_func_array)\s*\(/i',
+        '/\b(create_function)\s*\(/i',
     ];
 
     public function getName(): string
@@ -132,8 +134,9 @@ final class TinkerTool extends BaseTool
         foreach (self::DANGEROUS_PATTERNS as $pattern) {
             if (preg_match($pattern, $code)) {
                 throw new \Exception(
-                    'Code contains a blocked function. For security, the following are not allowed: '
-                    . 'exit, die, exec, passthru, shell_exec, system, proc_open, popen, pcntl_exec'
+                    'Code contains a blocked function. To prevent crashing the MCP server process, '
+                    . 'the following are not allowed: exit, die, exec, passthru, shell_exec, system, '
+                    . 'proc_open, popen, pcntl_exec, call_user_func, call_user_func_array, create_function'
                 );
             }
         }

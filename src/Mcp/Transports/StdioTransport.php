@@ -87,7 +87,7 @@ final class StdioTransport
         // Fallback to system temp directory
         $runtimeDir = sys_get_temp_dir() . '/mcp-server';
         if (!is_dir($runtimeDir)) {
-            @mkdir($runtimeDir, 0755, true);
+            @mkdir($runtimeDir, 0700, true);
         }
         return $runtimeDir . '/mcp-transport.log';
     }
