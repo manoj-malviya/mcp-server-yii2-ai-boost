@@ -384,6 +384,7 @@ class Server extends Component
             Tools\PerformanceProfilerTool::class,
             Tools\TinkerTool::class,
             Tools\EnvInspectorTool::class,
+            Tools\DevServerTool::class,
         ];
 
         foreach ($toolClasses as $class) {
