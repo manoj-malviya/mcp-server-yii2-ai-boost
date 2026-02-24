@@ -469,9 +469,17 @@ class DevServerTool extends BaseTool
                     exec("pkill -TERM -P $pid 2>/dev/null");
                     usleep(100000); // 100ms grace
                     exec("pkill -KILL -P $pid 2>/dev/null");
-                    posix_kill($pid, SIGTERM);
+                    if (function_exists('posix_kill')) {
+                        posix_kill($pid, SIGTERM);
+                    } else {
+                        exec("kill -TERM $pid 2>/dev/null");
+                    }
                     usleep(100000);
-                    posix_kill($pid, SIGKILL);
+                    if (function_exists('posix_kill')) {
+                        posix_kill($pid, SIGKILL);
+                    } else {
+                        exec("kill -KILL $pid 2>/dev/null");
+                    }
                 }
             }
 
