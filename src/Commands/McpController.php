@@ -38,7 +38,7 @@ class McpController extends Controller
 
         // Show startup message only when run interactively (TTY)
         // MCP clients pipe STDIN, so it won't be a TTY
-        if (posix_isatty(STDIN)) {
+        if (function_exists('posix_isatty') && posix_isatty(STDIN)) {
             fwrite(STDERR, "MCP Server starting...\n");
             fwrite(STDERR, "  - Server will appear to hang (this is normal)\n");
             fwrite(STDERR, "  - It's waiting for JSON-RPC input on STDIN\n");
