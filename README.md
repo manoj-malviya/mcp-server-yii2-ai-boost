@@ -1,6 +1,6 @@
 # Yii2 AI Boost - MCP Server for Yii2 Applications
 
-![Version](https://img.shields.io/badge/version-1.3.0--beta.1-blue)
+![Version](https://img.shields.io/badge/version-1.3.0-blue)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-green)
 ![Yii2](https://img.shields.io/badge/Yii2-2.0.45-orange)
 
@@ -22,11 +22,8 @@ Yii2 AI Boost is a Model Context Protocol (MCP) server that provides AI assistan
 For experienced developers:
 
 ```bash
-# 1. Install stable release
-composer require codechap/yii2-ai-boost:^1.1 --dev
-
-# Or install beta (includes semantic_search, model_inspector, validation_rules, console_command_inspector, migration_inspector, widget_inspector, performance_profiler, tinker, env_inspector)
-composer require codechap/yii2-ai-boost:1.3.0-beta.1 --dev
+# 1. Install
+composer require codechap/yii2-ai-boost:^1.3 --dev
 
 # 2. Run installation
 php yii boost/install
@@ -46,11 +43,7 @@ That's it! Claude Code and other AI tools now have access to your application co
 ```bash
 cd /path/to/yii2/application
 
-# Stable release (8 core tools)
-composer require codechap/yii2-ai-boost:^1.1 --dev
-
-# Beta release (16 tools - includes semantic search, model inspector, validation rules, console commands, migration inspector, widget inspector, performance profiler, tinker, env inspector)
-composer require codechap/yii2-ai-boost:1.3.0-beta.1 --dev
+composer require codechap/yii2-ai-boost:^1.3 --dev
 ```
 
 ### **Step 2**: Run Installation Wizard
@@ -243,7 +236,7 @@ Search Yii2 guidelines and documentation with full-text search:
 - Porter stemming ("migrating" matches "migration")
 - Grep fallback if FTS5 index not built yet
 
-### 9. `model_inspector` - Model Inspector (beta release)
+### 9. `model_inspector` - Model Inspector
 Inspect Active Record models at runtime:
 - Attributes with database types, labels, and hints
 - Relations (hasOne/hasMany) with link details and junction tables
@@ -252,7 +245,7 @@ Inspect Active Record models at runtime:
 - Fields and extra fields for API serialization
 - Automatic model discovery from `@app/models`
 
-### 10. `validation_rules` - Validation Rules (beta release)
+### 10. `validation_rules` - Validation Rules
 Inspect model validation rules and constraints:
 - All validation rules with parameters and scenario filters
 - Built-in vs custom validator classification
@@ -261,7 +254,7 @@ Inspect model validation rules and constraints:
 - Safe attributes per scenario
 - Supports filtering by specific scenario
 
-### 11. `console_command_inspector` - Console Command Inspector (beta release)
+### 11. `console_command_inspector` - Console Command Inspector
 Discover and inspect Yii2 console commands (`./yii` commands):
 - List all discoverable console controllers with class and description
 - Inspect individual commands with actions, options, and help text
@@ -269,7 +262,7 @@ Discover and inspect Yii2 console commands (`./yii` commands):
 - Discovers from controllerMap, namespace directory, and modules
 - Option aliases and PHPDoc-based help extraction
 
-### 12. `migration_inspector` - Migration Inspector (beta release)
+### 12. `migration_inspector` - Migration Inspector
 Inspect database migrations and their status:
 - Status summary with applied/pending counts and last applied migration
 - Applied migration history with timestamps (sorted most recent first)
@@ -277,7 +270,7 @@ Inspect database migrations and their status:
 - View individual migration source code and apply status
 - Supports `@app/migrations` and additional configured paths
 
-### 13. `widget_inspector` - Widget Inspector (beta release)
+### 13. `widget_inspector` - Widget Inspector
 Discover and inspect Yii2 widgets:
 - List available widgets grouped by source (framework core, grid, application)
 - Inspect widget properties with types, defaults, and PHPDoc descriptions
@@ -288,7 +281,7 @@ Discover and inspect Yii2 widgets:
 - Discovers widgets from @app/widgets/, @app/components/, and modules/*/widgets/ + modules/*/components/
 - **Note**: Yii2 allows widgets anywhere in the codebase. Auto-discovery scans the directories above; widgets in other locations can still be inspected by passing the full class name (e.g., `widget: "app\\custom\\MyWidget"`)
 
-### 14. `performance_profiler` - Performance Profiler (beta release)
+### 14. `performance_profiler` - Performance Profiler
 Analyze query performance and index coverage:
 - EXPLAIN query plans with driver-specific formatting (MySQL, PostgreSQL, SQLite)
 - Automatic detection of full table scans, missing index usage, filesort, and temporary tables
@@ -298,7 +291,7 @@ Analyze query performance and index coverage:
 - Overview mode with per-table summary and missing-index report across all tables
 - Supports bound parameters for parameterized query analysis
 
-### 15. `tinker` - Tinker (beta release)
+### 15. `tinker` - Tinker
 Execute arbitrary PHP code in the Yii2 application context:
 - Run any PHP expression or statement with full access to `\Yii::$app`
 - Automatic return value capture (tries expression first, falls back to statement)
@@ -308,7 +301,7 @@ Execute arbitrary PHP code in the Yii2 application context:
 - Return values formatted with `VarDumper` for objects
 - Output truncated at 100KB, sensitive data automatically redacted
 
-### 16. `env_inspector` - Environment Inspector (beta release)
+### 16. `env_inspector` - Environment Inspector
 Inspect environment variables, PHP extensions, and system configuration:
 - Environment variables with automatic sensitive value redaction
 - Prefix filter for environment variables (e.g., "DB", "APP")
