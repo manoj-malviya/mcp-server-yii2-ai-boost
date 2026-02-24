@@ -19,7 +19,7 @@ class Server extends Component
     /**
      * Package version - update this with each release
      */
-    public const VERSION = '1.3.0-beta.1';
+    public const VERSION = '1.3.0';
 
     /**
      * @var string Base path to the Yii2 application
