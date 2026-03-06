@@ -31,9 +31,9 @@ class SyncRulesController extends Controller
     public function init(): void
     {
         parent::init();
-        $this->guidelinesPath = \Yii::getAlias('@app/.ai/guidelines');
-        $this->cursorRulesPath = \Yii::getAlias('@app/.cursor/rules');
-        $this->zedRulesPath = \Yii::getAlias('@app/.rules');
+        $this->guidelinesPath = \Yii::getAlias('@yii2-boost-installation-path/.ai/guidelines');
+        $this->cursorRulesPath = \Yii::getAlias('@yii2-boost-installation-path/.cursor/rules');
+        $this->zedRulesPath = \Yii::getAlias('@yii2-boost-installation-path/.rules');
     }
 
     /**

@@ -65,7 +65,7 @@ class InfoController extends Controller
      */
     private function displayConfigStatus(): void
     {
-        $basePath = Yii::getAlias('@app');
+        $basePath = \Yii::getAlias('@yii2-boost-installation-path');
 
         $this->stdout("Configuration Status\n", 33);
         $this->stdout("─────────────────────────────────────────\n", 33);
@@ -113,7 +113,7 @@ class InfoController extends Controller
      */
     private function displayGuidelines(): void
     {
-        $basePath = Yii::getAlias('@app');
+        $basePath = \Yii::getAlias('@yii2-boost-installation-path');
         $guidelinesPath = $basePath . '/.ai/guidelines';
 
         $this->stdout("Guidelines\n", 33);
@@ -143,7 +143,7 @@ class InfoController extends Controller
         $this->stdout("Search Index\n", 33);
         $this->stdout("─────────────────────────────────────────\n", 33);
 
-        $searchDb = Yii::getAlias('@runtime') . '/boost/search.db';
+        $searchDb = \Yii::getAlias('@runtime') . '/boost/search.db';
 
         if (!file_exists($searchDb)) {
             $this->stdout("  ✗ Not built (run 'php yii boost/update')\n", 31);

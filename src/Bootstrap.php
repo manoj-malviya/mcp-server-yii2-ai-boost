@@ -28,6 +28,10 @@ final class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app): void
     {
+        $rootPath = \Yii::getAlias('@app/..');
+
+        Yii::setAlias('@yii2-boost-installation-path', $rootPath);
+
         // Only register commands in console applications
         if ($app instanceof ConsoleApplication) {
             // Register boost command controller (automatically handles all boost/* actions)

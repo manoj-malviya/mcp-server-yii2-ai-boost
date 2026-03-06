@@ -219,7 +219,7 @@ abstract class BaseTool extends Component
      */
     protected function getActiveRecordModels(): array
     {
-        $modelsPath = \Yii::getAlias('@app/models');
+        $modelsPath = \Yii::getAlias('@yii2-boost-installation-path/models');
         if (!is_dir($modelsPath)) {
             return [];
         }

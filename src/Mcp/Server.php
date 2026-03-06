@@ -57,7 +57,7 @@ class Server extends Component
         parent::init();
 
         // Initialize log file
-        $this->logFile = Yii::getAlias('@runtime/logs/mcp-requests.log');
+        $this->logFile = \Yii::getAlias('@runtime/logs/mcp-requests.log');
         $logDir = dirname($this->logFile);
         if (!is_dir($logDir)) {
             @mkdir($logDir, 0755, true);

@@ -77,7 +77,7 @@ class InstallController extends Controller
             'yii_version' => Yii::getVersion(),
             'php_version' => phpversion(),
             'app_base_path' => $app->getBasePath(),
-            'runtime_path' => Yii::getAlias('@runtime'),
+            'runtime_path' => \Yii::getAlias('@runtime'),
             'yii_env' => YII_ENV,
             'yii_debug' => YII_DEBUG,
         ];
@@ -103,7 +103,7 @@ class InstallController extends Controller
      */
     private function createDirectories(): void
     {
-        $basePath = Yii::getAlias('@app');
+        $basePath = \Yii::getAlias('@yii2-boost-installation-path');
 
         $directories = [
             $basePath . '/.ai',
@@ -137,7 +137,7 @@ class InstallController extends Controller
      */
     private function generateConfigFiles(array $envInfo): void
     {
-        $basePath = Yii::getAlias('@app');
+        $basePath = \Yii::getAlias('@yii2-boost-installation-path');
 
         // Generate .mcp.json with absolute paths for maximum compatibility with MCP clients
         $phpPath = PHP_BINARY;
@@ -235,7 +235,7 @@ class InstallController extends Controller
      */
     private function setGuidelines(): void
     {
-        $appBasePath = Yii::getAlias('@app');
+        $appBasePath = \Yii::getAlias('@yii2-boost-installation-path');
         $targetPath = $appBasePath . '/.ai/guidelines';
 
         // Determine package root (vendor/codechap/yii2-ai-boost)
@@ -283,7 +283,7 @@ class InstallController extends Controller
             return;
         }
 
-        $appPath = Yii::getAlias('@app');
+        $appPath = \Yii::getAlias('@yii2-boost-installation-path');
         $guidelinesPath = $appPath . '/.ai/guidelines';
 
         if (!is_dir($guidelinesPath)) {
@@ -291,7 +291,7 @@ class InstallController extends Controller
             return;
         }
 
-        $dbPath = Yii::getAlias('@runtime') . '/boost/search.db';
+        $dbPath = \Yii::getAlias('@runtime') . '/boost/search.db';
         $manager = new SearchIndexManager($dbPath);
         $manager->createSchema();
         $manager->clearIndex();

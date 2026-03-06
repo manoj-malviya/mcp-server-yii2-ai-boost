@@ -370,7 +370,7 @@ final class WidgetInspectorTool extends BaseTool
      */
     private function discoverFrameworkWidgets(): array
     {
-        $path = Yii::getAlias('@yii/widgets', false);
+        $path = \Yii::getAlias('@yii/widgets', false);
         if ($path === false || !is_dir($path)) {
             return [];
         }
@@ -385,7 +385,7 @@ final class WidgetInspectorTool extends BaseTool
      */
     private function discoverGridWidgets(): array
     {
-        $path = Yii::getAlias('@yii/grid', false);
+        $path = \Yii::getAlias('@yii/grid', false);
         if ($path === false || !is_dir($path)) {
             return [];
         }
@@ -412,7 +412,7 @@ final class WidgetInspectorTool extends BaseTool
         }
 
         // Scan module widget and component directories
-        $modulesPath = Yii::getAlias('@app/modules', false);
+        $modulesPath = \Yii::getAlias('@app/modules', false);
         if ($modulesPath !== false && is_dir($modulesPath)) {
             $modulesDirIterator = new \DirectoryIterator($modulesPath);
             foreach ($modulesDirIterator as $moduleDir) {

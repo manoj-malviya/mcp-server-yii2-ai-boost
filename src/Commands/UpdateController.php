@@ -62,7 +62,7 @@ class UpdateController extends Controller
      */
     private function updateGuidelines(): void
     {
-        $appPath = Yii::getAlias('@app');
+        $appPath = \Yii::getAlias('@yii2-boost-installation-path');
         $targetPath = $appPath . '/.ai/guidelines';
 
         // Locate source directory relative to this file
@@ -93,7 +93,7 @@ class UpdateController extends Controller
      */
     private function fetchYii2Guide(): void
     {
-        $appPath = Yii::getAlias('@app');
+        $appPath = \Yii::getAlias('@yii2-boost-installation-path');
         $cachePath = $appPath . '/.ai/yii2-guide';
 
         $downloader = new GitHubGuideDownloader($cachePath);
@@ -133,8 +133,8 @@ class UpdateController extends Controller
             return;
         }
 
-        $appPath = Yii::getAlias('@app');
-        $dbPath = Yii::getAlias('@runtime') . '/boost/search.db';
+        $appPath = \Yii::getAlias('@yii2-boost-installation-path');
+        $dbPath = \Yii::getAlias('@runtime') . '/boost/search.db';
 
         $manager = new SearchIndexManager($dbPath);
         $manager->createSchema();
@@ -208,7 +208,7 @@ class UpdateController extends Controller
      */
     private function verifyInstallation(): void
     {
-        $basePath = Yii::getAlias('@app');
+        $basePath = \Yii::getAlias('@yii2-boost-installation-path');
 
         $files = [
             '.mcp.json',
@@ -225,7 +225,7 @@ class UpdateController extends Controller
         }
 
         // Check search index
-        $searchDb = Yii::getAlias('@runtime') . '/boost/search.db';
+        $searchDb = \Yii::getAlias('@runtime') . '/boost/search.db';
         if (file_exists($searchDb)) {
             $sizeKb = round(filesize($searchDb) / 1024, 1);
             $this->stdout("  ✓ Search index ({$sizeKb}KB)\n", 32);

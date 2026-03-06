@@ -48,7 +48,7 @@ class McpController extends Controller
 
         try {
             // Log startup event to file for debugging
-            $logFile = Yii::getAlias('@runtime/logs/mcp-startup.log');
+            $logFile = \Yii::getAlias('@runtime/logs/mcp-startup.log');
             $logDir = dirname($logFile);
             if (!is_dir($logDir)) {
                 mkdir($logDir, 0755, true);
@@ -62,7 +62,7 @@ class McpController extends Controller
 
             // Create and start the MCP server
             $server = new Server([
-                'basePath' => Yii::getAlias('@app'),
+                'basePath' => \Yii::getAlias('@yii2-boost-installation-path'),
                 'transport' => 'stdio',
             ]);
 
@@ -114,7 +114,7 @@ class McpController extends Controller
         }
 
         // Log errors both to file and stderr for better debugging
-        $errorLogFile = Yii::getAlias('@runtime/logs/mcp-errors.log');
+        $errorLogFile = \Yii::getAlias('@runtime/logs/mcp-errors.log');
         ini_set('error_log', $errorLogFile);
 
         // Set custom error handler to also log to stderr

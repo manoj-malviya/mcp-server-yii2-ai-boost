@@ -96,13 +96,13 @@ final class ApplicationInfoTool extends BaseTool
         $result = [
             'yii_env' => YII_ENV,
             'yii_debug' => YII_DEBUG ? true : false,
-            'base_path' => Yii::getAlias('@app'),
-            'runtime_path' => Yii::getAlias('@runtime'),
+            'base_path' => \Yii::getAlias('@yii2-boost-installation-path'),
+            'runtime_path' => \Yii::getAlias('@runtime'),
         ];
 
         // Try to get web path if it exists (web app only)
         try {
-            $result['web_path'] = Yii::getAlias('@webroot');
+            $result['web_path'] = \Yii::getAlias('@webroot');
         } catch (\Exception $e) {
             // @webroot doesn't exist (console app)
         }
@@ -138,7 +138,7 @@ final class ApplicationInfoTool extends BaseTool
     private function getExtensionsInfo(): array
     {
         $extensions = [];
-        $vendorDir = Yii::getAlias('@vendor');
+        $vendorDir = \Yii::getAlias('@vendor');
 
         // Read installed.json from Composer
         $installedFile = $vendorDir . '/composer/installed.json';

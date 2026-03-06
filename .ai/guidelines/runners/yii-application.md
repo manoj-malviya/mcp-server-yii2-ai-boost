@@ -46,7 +46,7 @@ Application::EVENT_AFTER_ACTION
 ## Path Aliases
 ```php
 Yii::setAlias('@uploads', '@app/web/uploads');
-$path = Yii::getAlias('@uploads/file.jpg');
+$path = \Yii::getAlias('@uploads/file.jpg');
 
 // Built-in aliases
 // @app, @vendor, @runtime, @webroot, @web
