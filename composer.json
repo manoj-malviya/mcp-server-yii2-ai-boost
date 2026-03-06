@@ -1,5 +1,5 @@
 {
-    "name": "codechap/yii2-ai-boost",
+    "name": "manoj-malviya/yii2-ai-boost",
     "description": "MCP Server for Yii2 applications - provides AI context and development tools via Model Context Protocol",
     "keywords": ["yii2", "mcp", "ai", "assistant", "tools", "guidelines", "claude"],
     "type": "yii2-extension",
